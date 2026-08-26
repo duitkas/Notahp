@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nota Service - RJTRONIK Ultra Elite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #0284c7;
+            --accent-gradient: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            --border-color: #cbd5e1;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #94a3b8;
+            color: #1e293b;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .control-panel {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            border-top: 6px solid var(--accent);
+        }
+
+        .control-panel h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .control-panel h3 i {
+            color: var(--accent);
+            background: #e0f2fe;
+            padding: 8px;
+            border-radius: 8px;
+        }
+
+        .mandatory-box {
+            background: #f8fafc;
+            border: 2px dashed #0284c7;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .mandatory-box-title {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: #0369a1;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .consumer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .items-section-container {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .items-grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+        }
+
+        .item-price-card {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .item-price-row {
+            display: grid;
+            grid-template-columns: 1fr 120px;
+            gap: 8px;
+            align-items: center;
+            margin-top: 6px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: #475569;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            padding: 8px 10px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-family: inherit;
+            background: #ffffff;
+            width: 100%;
+        }
+
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+        }
+
+        .section-divider {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--primary);
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 4px;
+            margin: 15px 0 10px 0;
+        }
+
+        .database-tools {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .database-tools select {
+            flex: 1;
+            min-width: 200px;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1.5px solid var(--border-color);
+            font-size: 0.8rem;
+            background: #fff;
+        }
+
+        .btn-db {
+            padding: 8px 14px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-save { background: #10b981; color: white; }
+        .btn-load { background: #0284c7; color: white; }
+        .btn-delete { background: #ef4444; color: white; }
+
+        .nota-sheet {
+            background: #ffffff;
+            width: 12cm;     
+            min-height: 6cm; 
+            padding: 10px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            margin: 0 auto;
+            position: relative;
+            font-size: 8px;  
+            border: 1px solid #e2e8f0;
+        }
+
+        .nota-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 5px;
+            margin-bottom: 5px;
+        }
+
+        .brand-area h1 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+            line-height: 1;
+        }
+
+        .brand-tagline {
+            background: var(--accent-gradient);
+            color: white;
+            padding: 2px 6px;
+            font-size: 5px;
+            font-weight: 700;
+            display: inline-block;
+            margin-top: 3px;
+            border-radius: 3px;
+            text-transform: uppercase;
+        }
+
+        .header-right-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-contact {
+            text-align: right;
+            font-size: 6.5px;
+            line-height: 1.3;
+            color: #475569;
+        }
+
+        .brand-contact p {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .nota-logo {
+            width: 34px;
+            height: 34px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 1.5px solid var(--accent);
+            background: #000;
+        }
+
+        .nota-title-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 4px;
+        }
+
+        .nota-title-bar h2 {
+            margin: 0;
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 800;
+        }
+
+        .meta-top {
+            font-size: 6.5px;
+            text-align: right;
+            color: #475569;
+        }
+
+        .meta-top p {
+            margin: 1px 0;
+        }
+
+        .info-box-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border: 1.5px solid var(--primary);
+            border-radius: 4px;
+            margin-bottom: 5px;
+            background: #f8fafc;
+        }
+
+        .info-column {
+            padding: 4px 6px;
+        }
+
+        .info-column:first-child {
+            border-right: 1.5px solid var(--primary);
+        }
+
+        .info-row {
+            display: flex;
+            font-size: 6.8px;
+            margin-bottom: 2px;
+        }
+
+        .info-row span:first-child {
+            width: 48px;
+            font-weight: 700;
+            color: #334155;
+        }
+
+        .info-row span:nth-child(2) {
+            width: 8px;
+            text-align: center;
+        }
+
+        .info-row span:last-child {
+            flex: 1;
+            font-weight: 600;
+            color: var(--primary);
+            border-bottom: 1px dotted #cbd5e1;
+        }
+
+        .unified-table-container {
+            border: 1.5px solid var(--primary);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 4px;
+            background: #fff;
+        }
+
+        .item-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .item-table th, .item-table td {
+            border-bottom: 1px solid #cbd5e1;
+            border-right: 1px solid #cbd5e1;
+            padding: 2.5px 4px;
+            font-size: 6.5px;
+            overflow: hidden;
+            word-wrap: break-word;
+        }
+
+        .item-table th:last-child, .item-table td:last-child {
+            border-right: none;
+        }
+
+        .item-table th {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .subtotal-box-container {
+            border: 1.5px solid var(--primary);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 4px;
+            background: #fff;
+        }
+
+        .finance-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .finance-table td {
+            border-bottom: 1px solid #cbd5e1;
+            border-right: 1px solid #cbd5e1;
+            padding: 2.5px 5px;
+            font-size: 6.5px;
+        }
+
+        .finance-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .finance-table tr td:first-child {
+            font-weight: 700;
+            color: #334155;
+        }
+
+        .finance-table tr td:last-child {
+            border-right: none;
+        }
+
+        .total-box-container {
+            border: 1.5px solid var(--primary);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 5px;
+            background: var(--primary);
+        }
+
+        .total-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .total-table td {
+            padding: 3px 5px;
+            font-size: 7px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 8px;
+            align-items: flex-start;
+            border-top: 1px solid #cbd5e1;
+            padding-top: 5px;
+        }
+
+        .notes-box {
+            font-size: 5.5px;
+            line-height: 1.25;
+            color: #475569;
+            white-space: pre-line;
+        }
+
+        .notes-box strong {
+            display: block;
+            margin-bottom: 1px;
+            color: var(--primary);
+        }
+
+        .signatures {
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+            font-size: 6.5px;
+            font-weight: 600;
+        }
+
+        .sign-space {
+            height: 18px;
+        }
+
+        .nota-footer-message {
+            text-align: center;
+            font-size: 6px;
+            font-weight: 700;
+            color: #475569;
+            border-top: 1px dashed #cbd5e1;
+            margin-top: 5px;
+            padding-top: 3px;
+            text-transform: uppercase;
+        }
+
+        .action-bar {
+            text-align: center;
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-action {
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-print { background: var(--accent-gradient); }
+        .btn-wa { background: #25d366; }
+        .btn-gdrive { background: #0f766e; }
+
+        /* Dropdown WhatsApp Container */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ffffff;
+            min-width: 280px;
+            box-shadow: 0px 10px 25px rgba(0,0,0,0.2);
+            border-radius: 10px;
+            z-index: 100;
+            overflow: hidden;
+            margin-bottom: 8px;
+            border: 1px solid #cbd5e1;
+            text-align: left;
+        }
+
+        .dropdown-content button {
+            color: #1e293b;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border-bottom: 1px solid #f1f5f9;
+            transition: background 0.2s;
+        }
+
+        .dropdown-content button:hover {
+            background-color: #f0fdf4;
+            color: #16a34a;
+        }
+
+        .dropdown-content button:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown.active .dropdown-content {
+            display: block;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            opacity: 0.95;
+        }
+
+        @media print {
+            @page { size: F4; margin: 0; }
+            body { background: white; padding: 0; margin: 0; }
+            .control-panel, .action-bar { display: none !important; }
+            .nota-sheet { box-shadow: none; margin: 0; position: absolute; top: 0; left: 0; width: 12cm; border: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- PANEL INPUT LIVE -->
+    <div class="control-panel">
+        <h3><i class="fa-solid fa-sliders"></i> Panel Input Data & Database Nota RJTRONIK</h3>
+        
+        <div class="database-tools">
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--primary);">
+                <i class="fa-solid fa-database"></i> Database Service:
+            </div>
+            <select id="savedNotasSelect">
+                <option value="">-- Pilih Nota Tersimpan / Dalam Proses --</option>
+            </select>
+            <button type="button" class="btn-db btn-load" onclick="loadSelectedNota()"><i class="fa-solid fa-folder-open"></i> Muat</button>
+            <button type="button" class="btn-db btn-save" onclick="saveCurrentNota()"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+            <button type="button" class="btn-db btn-delete" onclick="deleteSelectedNota()"><i class="fa-solid fa-trash"></i> Hapus</button>
+            <button type="button" class="btn-db" style="background:#64748b; color:white;" onclick="clearForm()"><i class="fa-solid fa-file-circle-plus"></i> Baru</button>
+        </div>
+
+        <!-- 1. NOMOR NOTA & TANGGAL MASUK -->
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Nomor Nota</label>
+                <input type="text" id="inNoNota" value="RJT/2026/08/088" oninput="syncData()">
+            </div>
+            <div class="form-group">
+                <label>Tanggal Masuk (Otomatis saat dicetak)</label>
+                <input type="text" id="inTanggal" placeholder="Kosongkan = Tanggal Hari Ini" oninput="syncData()">
+            </div>
+        </div>
+
+        <!-- 2. DATA KONSUMEN & KELUHAN -->
+        <div class="mandatory-box">
+            <div class="mandatory-box-title"><i class="fa-solid fa-user-check"></i> Data Konsumen & Keluhan (Kosongkan = otomatis "-")</div>
+            <div class="consumer-grid">
+                <div class="form-group">
+                    <label>Nama Pelanggan</label>
+                    <input type="text" id="inNama" value="P Angga" placeholder="-" oninput="syncData()">
+                </div>
+                <div class="form-group">
+                    <label>Alamat Konsumen</label>
+                    <input type="text" id="inAlamat" value="Kedungdendeng" placeholder="-" oninput="syncData()">
+                </div>
+                <div class="form-group">
+                    <label>No. HP / WhatsApp</label>
+                    <input type="text" id="inNoHp" value="082373492907" placeholder="-" oninput="syncData()">
+                </div>
+                <div class="form-group">
+                    <label>Merk & Tipe HP</label>
+                    <input type="text" id="inTipeHp" value="Oppo A5s" placeholder="-" oninput="syncData()">
+                </div>
+                <div class="form-group">
+                    <label>Keluhan Kerusakan</label>
+                    <input type="text" id="inKeluhan" value="Mati total" placeholder="-" oninput="syncData()">
+                </div>
+                <div class="form-group">
+                    <label>IMEI / SN</label>
+                    <input type="text" id="inImei" value="" placeholder="-" oninput="syncData()">
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. RINCIAN PEKERJAAN & HARGA -->
+        <div class="items-section-container">
+            <div class="section-divider" style="margin-top: 0;"><i class="fa-solid fa-screwdriver-wrench"></i> Rincian Pekerjaan & Harga</div>
+            <div class="items-grid-container">
+                <div class="item-price-card">
+                    <div class="form-group">
+                        <label>Pekerjaan 1</label>
+                        <input type="text" id="inItem1" value="Ganti IC Power" oninput="syncData()">
+                    </div>
+                    <div class="item-price-row">
+                        <div style="font-size: 0.7rem; color: #64748b; font-weight: 600;">Biaya 1</div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <input type="text" id="inHarga1" value="230.000" placeholder="Harga" oninput="formatInputRupiah(this); syncData();">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item-price-card">
+                    <div class="form-group">
+                        <label>Pekerjaan 2</label>
+                        <input type="text" id="inItem2" value="" oninput="syncData()">
+                    </div>
+                    <div class="item-price-row">
+                        <div style="font-size: 0.7rem; color: #64748b; font-weight: 600;">Biaya 2</div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <input type="text" id="inHarga2" value="" placeholder="Harga" oninput="formatInputRupiah(this); syncData();">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item-price-card">
+                    <div class="form-group">
+                        <label>Pekerjaan 3</label>
+                        <input type="text" id="inItem3" value="" oninput="syncData()">
+                    </div>
+                    <div class="item-price-row">
+                        <div style="font-size: 0.7rem; color: #64748b; font-weight: 600;">Biaya 3</div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <input type="text" id="inHarga3" value="" placeholder="Harga" oninput="formatInputRupiah(this); syncData();">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item-price-card">
+                    <div class="form-group">
+                        <label>Pekerjaan 4</label>
+                        <input type="text" id="inItem4" value="" oninput="syncData()">
+                    </div>
+                    <div class="item-price-row">
+                        <div style="font-size: 0.7rem; color: #64748b; font-weight: 600;">Biaya 4</div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <input type="text" id="inHarga4" value="" placeholder="Harga" oninput="formatInputRupiah(this); syncData();">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. KEUANGAN & CATATAN -->
+        <div class="section-divider">Keuangan & Catatan</div>
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Diskon</label>
+                <input type="text" id="inDiskon" value="0" oninput="formatInputRupiah(this); syncData();">
+            </div>
+            <div class="form-group">
+                <label>Catatan Penting</label>
+                <textarea id="inCatatan" rows="2" oninput="syncData()">1. Garansi service 7 hari sejak nota dicetak.
+2. Pengambilan unit wajib membawa nota fisik ini.</textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- FORMAT NOTA (12x6 cm) -->
+    <div class="nota-sheet" id="notaSheet">
+        <div class="nota-header">
+            <div class="brand-area">
+                <h1>RJTRONIK</h1>
+                <div class="brand-tagline">Smartphone Repair Solution</div>
+            </div>
+            <div class="header-right-group">
+                <div class="brand-contact">
+                    <p>Ds. Kembang</p>
+                    <p><i class="fa-solid fa-phone-alt"></i> Wa: 0852 3217 3417</p>
+                </div>
+                <img src="https://files.catbox.moe/5dydt7.png" alt="Logo" class="nota-logo">
+            </div>
+        </div>
+
+        <div class="nota-title-bar">
+            <h2>NOTA SERVICE</h2>
+            <div class="meta-top"><p><strong>Tgl:</strong> <span id="outTanggal">26 Agustus 2026</span></p></div>
+        </div>
+        
+        <div style="font-size: 7px; margin-bottom: 4px; font-weight: 700; color: #334155;">
+            NO. NOTA : <span id="outNoNota" style="color:var(--accent);">RJT/2026/08/088</span>
+        </div>
+
+        <div class="info-box-grid">
+            <div class="info-column">
+                <div class="info-row"><span>Nama</span><span>:</span><span id="outNama">P Angga</span></div>
+                <div class="info-row"><span>No. HP</span><span>:</span><span id="outNoHp">082373492907</span></div>
+                <div class="info-row"><span>Alamat</span><span>:</span><span id="outAlamat">Kedungdendeng</span></div>
+            </div>
+            <div class="info-column">
+                <div class="info-row"><span>Tipe HP</span><span>:</span><span id="outTipeHp">Oppo A5s</span></div>
+                <div class="info-row"><span>IMEI/SN</span><span>:</span><span id="outImei">-</span></div>
+                <div class="info-row"><span>Keluhan</span><span>:</span><span id="outKeluhan">Mati total</span></div>
+            </div>
+        </div>
+
+        <div class="unified-table-container">
+            <table class="item-table">
+                <colgroup><col style="width: 18px;"><col style="width: auto;"><col style="width: 75px;"></colgroup>
+                <thead><tr><th>No</th><th>PEKERJAAN / SPAREPART</th><th>HARGA</th></tr></thead>
+                <tbody>
+                    <tr><td align="center">1.</td><td><span id="outItem1">Ganti IC Power</span></td><td><span id="labelRp1">Rp. </span><span id="outHarga1" style="float: right;">230.000</span></td></tr>
+                    <tr><td align="center">2.</td><td><span id="outItem2"></span></td><td><span id="labelRp2"></span><span id="outHarga2" style="float: right;"></span></td></tr>
+                    <tr><td align="center">3.</td><td><span id="outItem3"></span></td><td><span id="labelRp3"></span><span id="outHarga3" style="float: right;"></span></td></tr>
+                    <tr><td align="center">4.</td><td><span id="outItem4"></span></td><td><span id="labelRp4"></span><span id="outHarga4" style="float: right;"></span></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="subtotal-box-container">
+            <table class="finance-table">
+                <colgroup><col style="width: auto;"><col style="width: 75px;"></colgroup>
+                <tr><td>SUBTOTAL</td><td>Rp. <span style="float: right;" id="outSubtotal">230.000</span></td></tr>
+                <tr><td>DISKON</td><td>Rp. <span style="float: right;" id="outDiskon">0</span></td></tr>
+            </table>
+        </div>
+
+        <div class="total-box-container">
+            <table class="total-table">
+                <colgroup><col style="width: auto;"><col style="width: 75px;"></colgroup>
+                <tr><td>TOTAL</td><td>Rp. <span style="float: right;" id="outTotal">230.000</span></td></tr>
+            </table>
+        </div>
+
+        <div class="footer-grid">
+            <div class="notes-box">
+                <strong>CATATAN PENTING:</strong>
+                <span id="outCatatan">1. Garansi service 7 hari sejak nota dicetak.
+2. Pengambilan unit wajib membawa nota fisik ini.</span>
+            </div>
+            <div class="signatures">
+                <div>Penerima<div class="sign-space"></div>( ......... )</div>
+                <div>Teknisi<div class="sign-space"></div>( ......... )</div>
+            </div>
+        </div>
+
+        <div class="nota-footer-message">Terimakasih atas kunjungan/Kepercayaan anda</div>
+    </div>
+
+    <!-- Tombol Aksi -->
+    <div class="action-bar">
+        <button class="btn-action btn-print" onclick="handlePrintWithDriveUpload()"><i class="fa-solid fa-print"></i> Cetak Nota Fisik</button>
+        
+        <!-- DROPDOWN WHATSAPP -->
+        <div class="dropdown" id="waDropdown">
+            <button class="btn-action btn-wa" onclick="toggleWaDropdown()"><i class="fa-brands fa-whatsapp"></i> Kirim WhatsApp <i class="fa-solid fa-caret-up" style="margin-left: 4px;"></i></button>
+            <div class="dropdown-content">
+                <button onclick="sendWaKeluhanPelanggan()"><i class="fa-solid fa-triangle-exclamation" style="color: #eab308;"></i> 1. Kabari Keluhan & Pengecekan</button>
+                <button onclick="sendWaDetailKonsumen()"><i class="fa-solid fa-file-invoice" style="color: #0284c7;"></i> 2. Kirim Detail & Data Konsumen</button>
+            </div>
+        </div>
+
+        <button class="btn-action btn-gdrive" onclick="saveToGoogleDriveCloudScript()"><i class="fa-brands fa-google-drive"></i> Simpan ke Google Drive</button>
+    </div>
+
+    <!-- Loading Box -->
+    <div id="loadingProgressBox" style="display: none; background: #0f172a; color: white; padding: 14px; border-radius: 12px; margin-top: 20px; text-align: center; font-weight: 700; font-size: 0.9rem;">
+        <i class="fa-solid fa-spinner fa-spin"></i> <span id="loadingText">Menyimpan ke Google Drive...</span>
+    </div>
+
+</div>
+
+<script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwAovUMqS3Rwk3oOW0sBIQC2TFG9p8hFZWh0EwHMHIGJ4UnIyUXihoNce40C2keyYyhbA/exec";
+    let isUploadedToDrive = false;
+
+    function getTodayDate() {
+        const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        return new Date().toLocaleDateString('id-ID', options);
+    }
+
+    function formatRupiah(angka) {
+        if (isNaN(angka)) return "0";
+        return angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    function formatInputRupiah(input) {
+        let value = input.value.replace(/[^,\d]/g, '').toString();
+        let split = value.split(',');
+        let sisa = split[0].length % 3;
+        let rupiah = split[0].substr(0, sisa);
+        let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+        if (ribuan) {
+            let separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        input.value = rupiah;
+    }
+
+    window.onload = function() {
+        loadSavedList();
+        syncData();
+        
+        window.onclick = function(event) {
+            if (!event.target.closest('#waDropdown')) {
+                document.getElementById('waDropdown').classList.remove('active');
+            }
+        };
+    };
+
+    function toggleWaDropdown() {
+        const dropdown = document.getElementById('waDropdown');
+        dropdown.classList.toggle('active');
+    }
+
+    function syncData() {
+        isUploadedToDrive = false;
+
+        document.getElementById('outNoNota').innerText = document.getElementById('inNoNota').value;
+        
+        const inputTanggal = document.getElementById('inTanggal').value.trim();
+        document.getElementById('outTanggal').innerText = inputTanggal === "" ? getTodayDate() : inputTanggal;
+
+        let namaVal = document.getElementById('inNama').value.trim();
+        document.getElementById('outNama').innerText = namaVal === "" ? "-" : namaVal;
+
+        let alamatVal = document.getElementById('inAlamat').value.trim();
+        document.getElementById('outAlamat').innerText = alamatVal === "" ? "-" : alamatVal;
+
+        let noHpVal = document.getElementById('inNoHp').value.trim();
+        document.getElementById('outNoHp').innerText = noHpVal === "" ? "-" : noHpVal;
+
+        let tipeHpVal = document.getElementById('inTipeHp').value.trim();
+        document.getElementById('outTipeHp').innerText = tipeHpVal === "" ? "-" : tipeHpVal;
+        
+        let imeiVal = document.getElementById('inImei').value.trim();
+        document.getElementById('outImei').innerText = imeiVal === "" ? "-" : imeiVal;
+
+        let keluhanVal = document.getElementById('inKeluhan').value.trim();
+        document.getElementById('outKeluhan').innerText = keluhanVal === "" ? "-" : keluhanVal;
+
+        document.getElementById('outCatatan').innerText = document.getElementById('inCatatan').value;
+
+        let totalSubtotal = 0;
+        for (let i = 1; i <= 4; i++) {
+            let itemVal = document.getElementById('inItem' + i).value;
+            let hargaStr = document.getElementById('inHarga' + i).value.trim();
+            document.getElementById('outItem' + i).innerText = itemVal;
+            document.getElementById('outHarga' + i).innerText = hargaStr;
+
+            if (itemVal === "" && hargaStr === "") {
+                document.getElementById('labelRp' + i).innerText = "";
+            } else {
+                document.getElementById('labelRp' + i).innerText = "Rp. ";
+                let angkaBersih = parseFloat(hargaStr.replace(/\./g, '').replace(/,/g, '')) || 0;
+                totalSubtotal += angkaBersih;
+            }
+        }
+
+        let diskonStr = document.getElementById('inDiskon').value.trim();
+        let angkaDiskon = parseFloat(diskonStr.replace(/\./g, '').replace(/,/g, '')) || 0;
+        let totalAkhir = totalSubtotal - angkaDiskon;
+        if (totalAkhir < 0) totalAkhir = 0;
+
+        document.getElementById('outSubtotal').innerText = formatRupiah(totalSubtotal);
+        document.getElementById('outDiskon').innerText = formatRupiah(angkaDiskon);
+        document.getElementById('outTotal').innerText = formatRupiah(totalAkhir);
+    }
+
+    function getDatabase() {
+        let db = localStorage.getItem('rjtronik_notas');
+        return db ? JSON.parse(db) : {};
+    }
+
+    function saveCurrentNota() {
+        let noNota = document.getElementById('inNoNota').value.trim();
+        if (!noNota) { alert('Nomor Nota wajib diisi!'); return; }
+        let notaData = {
+            inNoNota: noNota,
+            inTanggal: document.getElementById('inTanggal').value,
+            inNama: document.getElementById('inNama').value,
+            inAlamat: document.getElementById('inAlamat').value,
+            inNoHp: document.getElementById('inNoHp').value,
+            inTipeHp: document.getElementById('inTipeHp').value,
+            inImei: document.getElementById('inImei').value,
+            inKeluhan: document.getElementById('inKeluhan').value,
+            inItem1: document.getElementById('inItem1').value,
+            inHarga1: document.getElementById('inHarga1').value,
+            inItem2: document.getElementById('inItem2').value,
+            inHarga2: document.getElementById('inHarga2').value,
+            inItem3: document.getElementById('inItem3').value,
+            inHarga3: document.getElementById('inHarga3').value,
+            inItem4: document.getElementById('inItem4').value,
+            inHarga4: document.getElementById('inHarga4').value,
+            inDiskon: document.getElementById('inDiskon').value,
+            inCatatan: document.getElementById('inCatatan').value
+        };
+        let db = getDatabase();
+        db[noNota] = notaData;
+        localStorage.setItem('rjtronik_notas', JSON.stringify(db));
+        loadSavedList();
+        alert('Nota berhasil disimpan ke database lokal!');
+    }
+
+    function loadSavedList() {
+        let db = getDatabase();
+        let select = document.getElementById('savedNotasSelect');
+        select.innerHTML = '<option value="">-- Pilih Nota Tersimpan --</option>';
+        for (let key in db) {
+            let item = db[key];
+            let option = document.createElement('option');
+            option.value = key;
+            option.text = `${key} - ${item.inNama || '-'} (${item.inTipeHp || '-'})`;
+            select.appendChild(option);
+        }
+    }
+
+    function loadSelectedNota() {
+        let noNota = document.getElementById('savedNotasSelect').value;
+        if (!noNota) return;
+        let db = getDatabase();
+        let data = db[noNota];
+        if (!data) return;
+
+        document.getElementById('inNoNota').value = data.inNoNota || '';
+        document.getElementById('inTanggal').value = data.inTanggal || '';
+        document.getElementById('inNama').value = data.inNama || '';
+        document.getElementById('inAlamat').value = data.inAlamat || '';
+        document.getElementById('inNoHp').value = data.inNoHp || '';
+        document.getElementById('inTipeHp').value = data.inTipeHp || '';
+        document.getElementById('inImei').value = data.inImei || '';
+        document.getElementById('inKeluhan').value = data.inKeluhan || '';
+        for (let i = 1; i <= 4; i++) {
+            document.getElementById('inItem' + i).value = data['inItem' + i] || '';
+            document.getElementById('inHarga' + i).value = data['inHarga' + i] || '';
+        }
+        document.getElementById('inDiskon').value = data.inDiskon || '0';
+        document.getElementById('inCatatan').value = data.inCatatan || '';
+        syncData();
+    }
+
+    function deleteSelectedNota() {
+        let noNota = document.getElementById('savedNotasSelect').value;
+        if (!noNota) { alert('Pilih nota yang ingin dihapus!'); return; }
+        if (confirm('Hapus nota ' + noNota + '?')) {
+            let db = getDatabase();
+            delete db[noNota];
+            localStorage.setItem('rjtronik_notas', JSON.stringify(db));
+            loadSavedList();
+            alert('Nota dihapus.');
+        }
+    }
+
+    function clearForm() {
+        document.getElementById('inNoNota').value = 'RJT/' + new Date().getFullYear() + '/08/' + Math.floor(100 + Math.random() * 900);
+        document.getElementById('inTanggal').value = '';
+        document.getElementById('inNama').value = '';
+        document.getElementById('inAlamat').value = '';
+        document.getElementById('inNoHp').value = '';
+        document.getElementById('inTipeHp').value = '';
+        document.getElementById('inImei').value = '';
+        document.getElementById('inKeluhan').value = '';
+        for (let i = 1; i <= 4; i++) {
+            document.getElementById('inItem' + i).value = '';
+            document.getElementById('inHarga' + i).value = '';
+        }
+        document.getElementById('inDiskon').value = '0';
+        syncData();
+    }
+
+    // Opsi 1: Kabari Keluhan & Konfirmasi Pengecekan (Tanpa sebutan teknisi)
+    function sendWaKeluhanPelanggan() {
+        let noHp = document.getElementById('inNoHp').value.trim();
+        let nama = document.getElementById('inNama').value.trim();
+        if(nama === "") nama = "-";
+        let tipeHp = document.getElementById('inTipeHp').value.trim();
+        if(tipeHp === "") tipeHp = "-";
+        let keluhan = document.getElementById('inKeluhan').value.trim();
+        if(keluhan === "") keluhan = "-";
+        let noNota = document.getElementById('inNoNota').value.trim();
+
+        if (!noHp || noHp === '-') { alert('No HP belum diisi atau bernilai "-"!'); return; }
+        if (noHp.startsWith('0')) noHp = '62' + noHp.substring(1);
+
+        let pesan = `Halo Kak *${nama}*,\n\nKami dari *RJTRONIK* mengonfirmasi bahwa unit smartphone Anda (*${tipeHp}*) dengan No. Nota *${noNota}* telah diterima.\n\nKeluhan Kerusakan: *${keluhan}*\n\nSaat ini unit sedang dalam antrean pengecekan. Kami akan mengabari kembali jika sudah ada perkembangan lebih lanjut.\n\nTerima kasih! 🙏`;
+        window.open(`https://api.whatsapp.com/send?phone=${noHp}&text=${encodeURIComponent(pesan)}`, '_blank');
+        document.getElementById('waDropdown').classList.remove('active');
+    }
+
+    // Opsi 2: Kirim Detail & Data Konsumen / Nota
+    function sendWaDetailKonsumen() {
+        let noHp = document.getElementById('inNoHp').value.trim();
+        let nama = document.getElementById('inNama').value.trim();
+        if(nama === "") nama = "-";
+        let alamat = document.getElementById('inAlamat').value.trim();
+        if(alamat === "") alamat = "-";
+        let tipeHp = document.getElementById('inTipeHp').value.trim();
+        if(tipeHp === "") tipeHp = "-";
+        let imei = document.getElementById('inImei').value.trim();
+        if(imei === "") imei = "-";
+        let keluhan = document.getElementById('inKeluhan').value.trim();
+        if(keluhan === "") keluhan = "-";
+        let noNota = document.getElementById('inNoNota').value.trim();
+        let tanggal = document.getElementById('outTanggal').innerText;
+        let total = document.getElementById('outTotal').innerText;
+
+        if (!noHp || noHp === '-') { alert('No HP belum diisi atau bernilai "-"!'); return; }
+        if (noHp.startsWith('0')) noHp = '62' + noHp.substring(1);
+
+        let pesan = `📋 *REKAP DATA & DETAIL SERVICE - RJTRONIK*\n\n` +
+                    `• No. Nota: *${noNota}*\n` +
+                    `• Tanggal: *${tanggal}*\n\n` +
+                    `👤 *DATA KONSUMEN:*\n` +
+                    `• Nama: *${nama}*\n` +
+                    `• No. HP: *${noHp}*\n` +
+                    `• Alamat: *${alamat}*\n\n` +
+                    `📱 *DETAIL UNIT & KELUHAN:*\n` +
+                    `• Tipe HP: *${tipeHp}*\n` +
+                    `• IMEI/SN: *${imei}*\n` +
+                    `• Keluhan: *${keluhan}*\n\n` +
+                    `💰 *TOTAL BIAYA: Rp. ${total}*\n\n` +
+                    `Terima kasih telah mempercayakan perbaikan handphone Anda di RJTRONIK! 🙏`;
+
+        window.open(`https://api.whatsapp.com/send?phone=${noHp}&text=${encodeURIComponent(pesan)}`, '_blank');
+        document.getElementById('waDropdown').classList.remove('active');
+    }
+
+    function saveToGoogleDriveCloudScript(callback) {
+        let namaPelanggan = document.getElementById('inNama').value.trim();
+        if(namaPelanggan === "") namaPelanggan = "-";
+
+        let box = document.getElementById('loadingProgressBox');
+        box.style.display = 'block';
+
+        let alamatFinal = document.getElementById('inAlamat').value.trim();
+        if(alamatFinal === "") alamatFinal = "-";
+
+        let noHpFinal = document.getElementById('inNoHp').value.trim();
+        if(noHpFinal === "") noHpFinal = "-";
+
+        let tipeHpFinal = document.getElementById('inTipeHp').value.trim();
+        if(tipeHpFinal === "") tipeHpFinal = "-";
+
+        let imeiFinal = document.getElementById('inImei').value.trim();
+        if(imeiFinal === "") imeiFinal = "-";
+
+        let keluhanFinal = document.getElementById('inKeluhan').value.trim();
+        if(keluhanFinal === "") keluhanFinal = "-";
+
+        let payload = {
+            noNota: document.getElementById('inNoNota').value.trim(),
+            tanggal: document.getElementById('outTanggal').innerText,
+            namaPelanggan: namaPelanggan,
+            alamat: alamatFinal,
+            noHp: noHpFinal,
+            tipeHp: tipeHpFinal,
+            imeiSn: imeiFinal,
+            keluhan: keluhanFinal,
+            rincianPekerjaan: [
+                { item: document.getElementById('inItem1').value, harga: document.getElementById('inHarga1').value },
+                { item: document.getElementById('inItem2').value, harga: document.getElementById('inHarga2').value },
+                { item: document.getElementById('inItem3').value, harga: document.getElementById('inHarga3').value },
+                { item: document.getElementById('inItem4').value, harga: document.getElementById('inHarga4').value }
+            ],
+            subtotal: document.getElementById('outSubtotal').innerText,
+            diskon: document.getElementById('outDiskon').innerText,
+            totalBiaya: document.getElementById('outTotal').innerText,
+            catatan: document.getElementById('inCatatan').value
+        };
+
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain;charset=utf-8',
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(response => response.json())
+        .then(result => {
+            box.style.display = 'none';
+            if(result.status === "success") {
+                isUploadedToDrive = true;
+                if (!callback) {
+                    alert('✅ Sukses! File JSON atas nama "' + namaPelanggan + '" berhasil masuk ke folder Backup_Nota.');
+                }
+                if (typeof callback === 'function') {
+                    callback();
+                }
+            } else {
+                alert('❌ Gagal dari server: ' + result.message);
+            }
+        })
+        .catch(error => {
+            box.style.display = 'none';
+            console.error('Error:', error);
+            alert('❌ Terjadi kesalahan koneksi.');
+        });
+    }
+
+    function handlePrintWithDriveUpload() {
+        syncData();
+
+        if (isUploadedToDrive) {
+            window.print();
+        } else {
+            let konfirmasi = confirm('⚠️ Peraturan: Nota harus di-upload ke Google Drive terlebih dahulu sebelum dicetak.\n\nKlik OK untuk Upload dan Cetak sekarang.');
+            if (konfirmasi) {
+                saveToGoogleDriveCloudScript(function() {
+                    window.print();
+                });
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
