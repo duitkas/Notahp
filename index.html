@@ -171,7 +171,7 @@
 
         .database-tools select {
             flex: 1;
-            min-width: 200px;
+            min-width: 180px;
             padding: 8px;
             border-radius: 6px;
             border: 1.5px solid var(--border-color);
@@ -180,7 +180,7 @@
         }
 
         .btn-db {
-            padding: 8px 14px;
+            padding: 8px 12px;
             font-size: 0.75rem;
             font-weight: 700;
             border: none;
@@ -194,6 +194,7 @@
         .btn-save { background: #10b981; color: white; }
         .btn-load { background: #0284c7; color: white; }
         .btn-delete { background: #ef4444; color: white; }
+        .btn-json { background: #8b5cf6; color: white; }
 
         .nota-sheet {
             background: #ffffff;
@@ -490,7 +491,6 @@
 
         .btn-print { background: var(--accent-gradient); }
         .btn-wa { background: #25d366; }
-        .btn-gdrive { background: #0f766e; }
 
         /* Dropdown WhatsApp Container */
         .dropdown {
@@ -568,14 +568,19 @@
         
         <div class="database-tools">
             <div style="font-size: 0.8rem; font-weight: 700; color: var(--primary);">
-                <i class="fa-solid fa-database"></i> Database Service:
+                <i class="fa-solid fa-database"></i> Database:
             </div>
             <select id="savedNotasSelect">
-                <option value="">-- Pilih Nota Tersimpan / Dalam Proses --</option>
+                <option value="">-- Pilih Nota Tersimpan --</option>
             </select>
             <button type="button" class="btn-db btn-load" onclick="loadSelectedNota()"><i class="fa-solid fa-folder-open"></i> Muat</button>
             <button type="button" class="btn-db btn-save" onclick="saveCurrentNota()"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
             <button type="button" class="btn-db btn-delete" onclick="deleteSelectedNota()"><i class="fa-solid fa-trash"></i> Hapus</button>
+            
+            <!-- Impor JSON Saja -->
+            <input type="file" id="importJsonFile" accept=".json" style="display: none;" onchange="importJsonData(event)">
+            <button type="button" class="btn-db btn-json" onclick="document.getElementById('importJsonFile').click()"><i class="fa-solid fa-file-import"></i> Impor JSON</button>
+
             <button type="button" class="btn-db" style="background:#64748b; color:white;" onclick="clearForm()"><i class="fa-solid fa-file-circle-plus"></i> Baru</button>
         </div>
 
@@ -586,8 +591,11 @@
                 <input type="text" id="inNoNota" value="RJT/2026/08/088" oninput="syncData()">
             </div>
             <div class="form-group">
-                <label>Tanggal Masuk (Otomatis saat dicetak)</label>
-                <input type="text" id="inTanggal" placeholder="Kosongkan = Tanggal Hari Ini" oninput="syncData()">
+                <label>Tanggal Masuk</label>
+                <div style="display: flex; gap: 6px;">
+                    <input type="date" id="inTanggal" style="flex: 1;" onchange="syncData()">
+                    <button type="button" class="btn-db" style="background: var(--accent); color: white; padding: 0 10px;" onclick="setTodayDateInput()" title="Set Tanggal Hari Ini"><i class="fa-solid fa-calendar-day"></i></button>
+                </div>
             </div>
         </div>
 
@@ -597,23 +605,23 @@
             <div class="consumer-grid">
                 <div class="form-group">
                     <label>Nama Pelanggan</label>
-                    <input type="text" id="inNama" value="P Angga" placeholder="-" oninput="syncData()">
+                    <input type="text" id="inNama" value="" placeholder="-" oninput="syncData()">
                 </div>
                 <div class="form-group">
                     <label>Alamat Konsumen</label>
-                    <input type="text" id="inAlamat" value="Kedungdendeng" placeholder="-" oninput="syncData()">
+                    <input type="text" id="inAlamat" value="" placeholder="-" oninput="syncData()">
                 </div>
                 <div class="form-group">
                     <label>No. HP / WhatsApp</label>
-                    <input type="text" id="inNoHp" value="082373492907" placeholder="-" oninput="syncData()">
+                    <input type="text" id="inNoHp" value="" placeholder="-" oninput="syncData()">
                 </div>
                 <div class="form-group">
                     <label>Merk & Tipe HP</label>
-                    <input type="text" id="inTipeHp" value="Oppo A5s" placeholder="-" oninput="syncData()">
+                    <input type="text" id="inTipeHp" value="" placeholder="-" oninput="syncData()">
                 </div>
                 <div class="form-group">
                     <label>Keluhan Kerusakan</label>
-                    <input type="text" id="inKeluhan" value="Mati total" placeholder="-" oninput="syncData()">
+                    <input type="text" id="inKeluhan" value="" placeholder="-" oninput="syncData()">
                 </div>
                 <div class="form-group">
                     <label>IMEI / SN</label>
@@ -629,12 +637,12 @@
                 <div class="item-price-card">
                     <div class="form-group">
                         <label>Pekerjaan 1</label>
-                        <input type="text" id="inItem1" value="Ganti IC Power" oninput="syncData()">
+                        <input type="text" id="inItem1" value="" oninput="syncData()">
                     </div>
                     <div class="item-price-row">
                         <div style="font-size: 0.7rem; color: #64748b; font-weight: 600;">Biaya 1</div>
                         <div class="form-group" style="margin-bottom: 0;">
-                            <input type="text" id="inHarga1" value="230.000" placeholder="Harga" oninput="formatInputRupiah(this); syncData();">
+                            <input type="text" id="inHarga1" value="" placeholder="Harga" oninput="formatInputRupiah(this); syncData();">
                         </div>
                     </div>
                 </div>
@@ -689,8 +697,9 @@
             </div>
             <div class="form-group">
                 <label>Catatan Penting</label>
-                <textarea id="inCatatan" rows="2" oninput="syncData()">1. Garansi service 7 hari sejak nota dicetak.
-2. Pengambilan unit wajib membawa nota fisik ini.</textarea>
+                <textarea id="inCatatan" rows="3" oninput="syncData()">1. Garansi 14 hari setelah nota ini dibuat.
+2. Asal tidak pecah/kena air atau cacat.
+3. Jika di luar itu bisa konfirmasi terlebih dahulu.</textarea>
             </div>
         </div>
     </div>
@@ -713,7 +722,7 @@
 
         <div class="nota-title-bar">
             <h2>NOTA SERVICE</h2>
-            <div class="meta-top"><p><strong>Tgl:</strong> <span id="outTanggal">26 Agustus 2026</span></p></div>
+            <div class="meta-top"><p><strong>Tgl:</strong> <span id="outTanggal">27 Agustus 2026</span></p></div>
         </div>
         
         <div style="font-size: 7px; margin-bottom: 4px; font-weight: 700; color: #334155;">
@@ -722,14 +731,14 @@
 
         <div class="info-box-grid">
             <div class="info-column">
-                <div class="info-row"><span>Nama</span><span>:</span><span id="outNama">P Angga</span></div>
-                <div class="info-row"><span>No. HP</span><span>:</span><span id="outNoHp">082373492907</span></div>
-                <div class="info-row"><span>Alamat</span><span>:</span><span id="outAlamat">Kedungdendeng</span></div>
+                <div class="info-row"><span>Nama</span><span>:</span><span id="outNama">-</span></div>
+                <div class="info-row"><span>No. HP</span><span>:</span><span id="outNoHp">-</span></div>
+                <div class="info-row"><span>Alamat</span><span>:</span><span id="outAlamat">-</span></div>
             </div>
             <div class="info-column">
-                <div class="info-row"><span>Tipe HP</span><span>:</span><span id="outTipeHp">Oppo A5s</span></div>
+                <div class="info-row"><span>Tipe HP</span><span>:</span><span id="outTipeHp">-</span></div>
                 <div class="info-row"><span>IMEI/SN</span><span>:</span><span id="outImei">-</span></div>
-                <div class="info-row"><span>Keluhan</span><span>:</span><span id="outKeluhan">Mati total</span></div>
+                <div class="info-row"><span>Keluhan</span><span>:</span><span id="outKeluhan">-</span></div>
             </div>
         </div>
 
@@ -738,7 +747,7 @@
                 <colgroup><col style="width: 18px;"><col style="width: auto;"><col style="width: 75px;"></colgroup>
                 <thead><tr><th>No</th><th>PEKERJAAN / SPAREPART</th><th>HARGA</th></tr></thead>
                 <tbody>
-                    <tr><td align="center">1.</td><td><span id="outItem1">Ganti IC Power</span></td><td><span id="labelRp1">Rp. </span><span id="outHarga1" style="float: right;">230.000</span></td></tr>
+                    <tr><td align="center">1.</td><td><span id="outItem1"></span></td><td><span id="labelRp1"></span><span id="outHarga1" style="float: right;"></span></td></tr>
                     <tr><td align="center">2.</td><td><span id="outItem2"></span></td><td><span id="labelRp2"></span><span id="outHarga2" style="float: right;"></span></td></tr>
                     <tr><td align="center">3.</td><td><span id="outItem3"></span></td><td><span id="labelRp3"></span><span id="outHarga3" style="float: right;"></span></td></tr>
                     <tr><td align="center">4.</td><td><span id="outItem4"></span></td><td><span id="labelRp4"></span><span id="outHarga4" style="float: right;"></span></td></tr>
@@ -749,7 +758,7 @@
         <div class="subtotal-box-container">
             <table class="finance-table">
                 <colgroup><col style="width: auto;"><col style="width: 75px;"></colgroup>
-                <tr><td>SUBTOTAL</td><td>Rp. <span style="float: right;" id="outSubtotal">230.000</span></td></tr>
+                <tr><td>SUBTOTAL</td><td>Rp. <span style="float: right;" id="outSubtotal">0</span></td></tr>
                 <tr><td>DISKON</td><td>Rp. <span style="float: right;" id="outDiskon">0</span></td></tr>
             </table>
         </div>
@@ -757,15 +766,16 @@
         <div class="total-box-container">
             <table class="total-table">
                 <colgroup><col style="width: auto;"><col style="width: 75px;"></colgroup>
-                <tr><td>TOTAL</td><td>Rp. <span style="float: right;" id="outTotal">230.000</span></td></tr>
+                <tr><td>TOTAL</td><td>Rp. <span style="float: right;" id="outTotal">0</span></td></tr>
             </table>
         </div>
 
         <div class="footer-grid">
             <div class="notes-box">
                 <strong>CATATAN PENTING:</strong>
-                <span id="outCatatan">1. Garansi service 7 hari sejak nota dicetak.
-2. Pengambilan unit wajib membawa nota fisik ini.</span>
+                <span id="outCatatan">1. Garansi 14 hari setelah nota ini dibuat.
+2. Asal tidak pecah/kena air atau cacat.
+3. Jika di luar itu bisa konfirmasi terlebih dahulu.</span>
             </div>
             <div class="signatures">
                 <div>Penerima<div class="sign-space"></div>( ......... )</div>
@@ -785,11 +795,9 @@
             <button class="btn-action btn-wa" onclick="toggleWaDropdown()"><i class="fa-brands fa-whatsapp"></i> Kirim WhatsApp <i class="fa-solid fa-caret-up" style="margin-left: 4px;"></i></button>
             <div class="dropdown-content">
                 <button onclick="sendWaKeluhanPelanggan()"><i class="fa-solid fa-triangle-exclamation" style="color: #eab308;"></i> 1. Kabari Keluhan & Pengecekan</button>
-                <button onclick="sendWaDetailKonsumen()"><i class="fa-solid fa-file-invoice" style="color: #0284c7;"></i> 2. Kirim Detail & Data Konsumen</button>
+                <button onclick="executeSendWaDetailKonsumen()"><i class="fa-solid fa-file-invoice" style="color: #0284c7;"></i> 2. Kirim Detail & Data Konsumen</button>
             </div>
         </div>
-
-        <button class="btn-action btn-gdrive" onclick="saveToGoogleDriveCloudScript()"><i class="fa-brands fa-google-drive"></i> Simpan ke Google Drive</button>
     </div>
 
     <!-- Loading Box -->
@@ -801,11 +809,22 @@
 
 <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwAovUMqS3Rwk3oOW0sBIQC2TFG9p8hFZWh0EwHMHIGJ4UnIyUXihoNce40C2keyYyhbA/exec";
-    let isUploadedToDrive = false;
 
     function getTodayDate() {
         const options = { day: 'numeric', month: 'long', year: 'numeric' };
         return new Date().toLocaleDateString('id-ID', options);
+    }
+
+    function setTodayDateInput() {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        let mm = today.getMonth() + 1;
+        let dd = today.getDate();
+        if (mm < 10) mm = '0' + mm;
+        if (dd < 10) dd = '0' + dd;
+        
+        document.getElementById('inTanggal').value = `${yyyy}-${mm}-${dd}`;
+        syncData();
     }
 
     function formatRupiah(angka) {
@@ -829,7 +848,7 @@
 
     window.onload = function() {
         loadSavedList();
-        syncData();
+        clearFormOnLoad();
         
         window.onclick = function(event) {
             if (!event.target.closest('#waDropdown')) {
@@ -844,12 +863,20 @@
     }
 
     function syncData() {
-        isUploadedToDrive = false;
-
         document.getElementById('outNoNota').innerText = document.getElementById('inNoNota').value;
         
         const inputTanggal = document.getElementById('inTanggal').value.trim();
-        document.getElementById('outTanggal').innerText = inputTanggal === "" ? getTodayDate() : inputTanggal;
+        if (inputTanggal === "") {
+            document.getElementById('outTanggal').innerText = getTodayDate();
+        } else {
+            let parts = inputTanggal.split('-');
+            if(parts.length === 3) {
+                let dateObj = new Date(parts[0], parts[1] - 1, parts[2]);
+                document.getElementById('outTanggal').innerText = dateObj.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+            } else {
+                document.getElementById('outTanggal').innerText = inputTanggal;
+            }
+        }
 
         let namaVal = document.getElementById('inNama').value.trim();
         document.getElementById('outNama').innerText = namaVal === "" ? "-" : namaVal;
@@ -951,22 +978,59 @@
         let db = getDatabase();
         let data = db[noNota];
         if (!data) return;
+        fillFormWithData(data);
+    }
 
-        document.getElementById('inNoNota').value = data.inNoNota || '';
-        document.getElementById('inTanggal').value = data.inTanggal || '';
-        document.getElementById('inNama').value = data.inNama || '';
-        document.getElementById('inAlamat').value = data.inAlamat || '';
-        document.getElementById('inNoHp').value = data.inNoHp || '';
-        document.getElementById('inTipeHp').value = data.inTipeHp || '';
-        document.getElementById('inImei').value = data.inImei || '';
-        document.getElementById('inKeluhan').value = data.inKeluhan || '';
-        for (let i = 1; i <= 4; i++) {
-            document.getElementById('inItem' + i).value = data['inItem' + i] || '';
-            document.getElementById('inHarga' + i).value = data['inHarga' + i] || '';
+    function fillFormWithData(data) {
+        document.getElementById('inNoNota').value = data.inNoNota || data.noNota || '';
+        document.getElementById('inTanggal').value = data.inTanggal || data.tanggal || '';
+        document.getElementById('inNama').value = data.inNama || data.namaPelanggan || '';
+        document.getElementById('inAlamat').value = data.inAlamat || data.alamat || '';
+        document.getElementById('inNoHp').value = data.inNoHp || data.noHp || '';
+        document.getElementById('inTipeHp').value = data.inTipeHp || data.tipeHp || '';
+        document.getElementById('inImei').value = data.inImei || data.imeiSn || '';
+        document.getElementById('inKeluhan').value = data.inKeluhan || data.keluhan || '';
+
+        if (Array.isArray(data.rincianPekerjaan)) {
+            for (let i = 0; i < 4; i++) {
+                if (data.rincianPekerjaan[i]) {
+                    document.getElementById('inItem' + (i + 1)).value = data.rincianPekerjaan[i].item || '';
+                    document.getElementById('inHarga' + (i + 1)).value = data.rincianPekerjaan[i].harga || '';
+                } else {
+                    document.getElementById('inItem' + (i + 1)).value = '';
+                    document.getElementById('inHarga' + (i + 1)).value = '';
+                }
+            }
+        } else {
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById('inItem' + i).value = data['inItem' + i] || '';
+                document.getElementById('inHarga' + i).value = data['inHarga' + i] || '';
+            }
         }
-        document.getElementById('inDiskon').value = data.inDiskon || '0';
-        document.getElementById('inCatatan').value = data.inCatatan || '';
+
+        document.getElementById('inDiskon').value = data.inDiskon || data.diskon || '0';
+        document.getElementById('inCatatan').value = data.inCatatan || data.catatan || '1. Garansi 14 hari setelah nota ini dibuat.\n2. Asal tidak pecah/kena air atau cacat.\n3. Jika di luar itu bisa konfirmasi terlebih dahulu.';
+        
         syncData();
+    }
+
+    function importJsonData(event) {
+        let file = event.target.files[0];
+        if (!file) return;
+
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                let jsonContent = JSON.parse(e.target.result);
+                fillFormWithData(jsonContent);
+                alert('✅ Berhasil memuat file JSON! Panel input & tampilan nota diperbarui.');
+            } catch (err) {
+                console.error(err);
+                alert('❌ Gagal membaca file JSON. Pastikan format filenya benar.');
+            }
+            event.target.value = '';
+        };
+        reader.readAsText(file);
     }
 
     function deleteSelectedNota() {
@@ -983,7 +1047,7 @@
 
     function clearForm() {
         document.getElementById('inNoNota').value = 'RJT/' + new Date().getFullYear() + '/08/' + Math.floor(100 + Math.random() * 900);
-        document.getElementById('inTanggal').value = '';
+        setTodayDateInput(); // Otomatis set tanggal hari ini saat klik Baru
         document.getElementById('inNama').value = '';
         document.getElementById('inAlamat').value = '';
         document.getElementById('inNoHp').value = '';
@@ -995,10 +1059,14 @@
             document.getElementById('inHarga' + i).value = '';
         }
         document.getElementById('inDiskon').value = '0';
+        document.getElementById('inCatatan').value = '1. Garansi 14 hari setelah nota ini dibuat.\n2. Asal tidak pecah/kena air atau cacat.\n3. Jika di luar itu bisa konfirmasi terlebih dahulu.';
         syncData();
     }
 
-    // Opsi 1: Kabari Keluhan & Konfirmasi Pengecekan (Tanpa sebutan teknisi)
+    function clearFormOnLoad() {
+        clearForm();
+    }
+
     function sendWaKeluhanPelanggan() {
         let noHp = document.getElementById('inNoHp').value.trim();
         let nama = document.getElementById('inNama').value.trim();
@@ -1017,8 +1085,7 @@
         document.getElementById('waDropdown').classList.remove('active');
     }
 
-    // Opsi 2: Kirim Detail & Data Konsumen / Nota
-    function sendWaDetailKonsumen() {
+    function executeSendWaDetailKonsumen() {
         let noHp = document.getElementById('inNoHp').value.trim();
         let nama = document.getElementById('inNama').value.trim();
         if(nama === "") nama = "-";
@@ -1061,6 +1128,7 @@
 
         let box = document.getElementById('loadingProgressBox');
         box.style.display = 'block';
+        document.getElementById('loadingText').innerText = "Menyimpan otomatis ke Google Drive...";
 
         let alamatFinal = document.getElementById('inAlamat').value.trim();
         if(alamatFinal === "") alamatFinal = "-";
@@ -1109,10 +1177,6 @@
         .then(result => {
             box.style.display = 'none';
             if(result.status === "success") {
-                isUploadedToDrive = true;
-                if (!callback) {
-                    alert('✅ Sukses! File JSON atas nama "' + namaPelanggan + '" berhasil masuk ke folder Backup_Nota.');
-                }
                 if (typeof callback === 'function') {
                     callback();
                 }
@@ -1129,17 +1193,9 @@
 
     function handlePrintWithDriveUpload() {
         syncData();
-
-        if (isUploadedToDrive) {
+        saveToGoogleDriveCloudScript(function() {
             window.print();
-        } else {
-            let konfirmasi = confirm('⚠️ Peraturan: Nota harus di-upload ke Google Drive terlebih dahulu sebelum dicetak.\n\nKlik OK untuk Upload dan Cetak sekarang.');
-            if (konfirmasi) {
-                saveToGoogleDriveCloudScript(function() {
-                    window.print();
-                });
-            }
-        }
+        });
     }
 </script>
 
