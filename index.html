@@ -196,7 +196,7 @@
         .btn-delete { background: #ef4444; color: white; }
         .btn-json { background: #8b5cf6; color: white; }
 
-        /* FORMAT NOTA (12 x 5.8 cm agar pas 1 halaman cetak tanpa sisa berlebih) */
+        /* FORMAT NOTA (12 x 5.8 cm dengan garis putus-putus di sekelilingnya) */
         .nota-sheet {
             background: #ffffff;
             width: 12cm;     
@@ -206,7 +206,7 @@
             margin: 0 auto;
             position: relative;
             font-size: 8px;  
-            border: 2px dashed #64748b; /* Garis putus-putus untuk panduan potong */
+            border: 2px dashed #64748b; 
             border-radius: 4px;
         }
 
@@ -579,7 +579,6 @@
             <button type="button" class="btn-db btn-save" onclick="saveCurrentNota()"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
             <button type="button" class="btn-db btn-delete" onclick="deleteSelectedNota()"><i class="fa-solid fa-trash"></i> Hapus</button>
             
-            <!-- Impor JSON Saja -->
             <input type="file" id="importJsonFile" accept=".json" style="display: none;" onchange="importJsonData(event)">
             <button type="button" class="btn-db btn-json" onclick="document.getElementById('importJsonFile').click()"><i class="fa-solid fa-file-import"></i> Impor JSON</button>
 
@@ -695,7 +694,8 @@
         <div class="form-grid">
             <div class="form-group">
                 <label>Diskon</label>
-                <input type="text" id="inDiskon" value="0" oninput="formatInputRupiah(this); syncData();">
+                <!-- Kolom diskon dikosongkan tanpa nilai default 0 -->
+                <input type="text" id="inDiskon" value="" placeholder="0" oninput="formatInputRupiah(this); syncData();">
             </div>
             <div class="form-group">
                 <label>Catatan Penting</label>
@@ -792,7 +792,6 @@
     <div class="action-bar">
         <button class="btn-action btn-print" onclick="handlePrintWithDriveUpload()"><i class="fa-solid fa-print"></i> Cetak Nota Fisik</button>
         
-        <!-- DROPDOWN WHATSAPP -->
         <div class="dropdown" id="waDropdown">
             <button class="btn-action btn-wa" onclick="toggleWaDropdown()"><i class="fa-brands fa-whatsapp"></i> Kirim WhatsApp <i class="fa-solid fa-caret-up" style="margin-left: 4px;"></i></button>
             <div class="dropdown-content">
@@ -1010,7 +1009,7 @@
             }
         }
 
-        document.getElementById('inDiskon').value = data.inDiskon || data.diskon || '0';
+        document.getElementById('inDiskon').value = data.inDiskon || data.diskon || '';
         document.getElementById('inCatatan').value = data.inCatatan || data.catatan || '1. Garansi 14 hari setelah nota ini dibuat.\n2. Asal tidak pecah/kena air atau cacat.\n3. Jika di luar itu bisa konfirmasi terlebih dahulu.';
         
         syncData();
@@ -1060,7 +1059,7 @@
             document.getElementById('inItem' + i).value = '';
             document.getElementById('inHarga' + i).value = '';
         }
-        document.getElementById('inDiskon').value = '0';
+        document.getElementById('inDiskon').value = '';
         document.getElementById('inCatatan').value = '1. Garansi 14 hari setelah nota ini dibuat.\n2. Asal tidak pecah/kena air atau cacat.\n3. Jika di luar itu bisa konfirmasi terlebih dahulu.';
         syncData();
     }
