@@ -196,16 +196,18 @@
         .btn-delete { background: #ef4444; color: white; }
         .btn-json { background: #8b5cf6; color: white; }
 
+        /* FORMAT NOTA (12 x 5.8 cm agar pas 1 halaman cetak tanpa sisa berlebih) */
         .nota-sheet {
             background: #ffffff;
             width: 12cm;     
-            min-height: 6cm; 
-            padding: 10px;
+            min-height: 5.6cm; 
+            padding: 8px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.15);
             margin: 0 auto;
             position: relative;
             font-size: 8px;  
-            border: 1px solid #e2e8f0;
+            border: 2px dashed #64748b; /* Garis putus-putus untuk panduan potong */
+            border-radius: 4px;
         }
 
         .nota-header {
@@ -213,13 +215,13 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 2px solid var(--primary);
-            padding-bottom: 5px;
-            margin-bottom: 5px;
+            padding-bottom: 4px;
+            margin-bottom: 4px;
         }
 
         .brand-area h1 {
             margin: 0;
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             font-weight: 800;
             color: var(--primary);
             letter-spacing: -0.5px;
@@ -229,11 +231,11 @@
         .brand-tagline {
             background: var(--accent-gradient);
             color: white;
-            padding: 2px 6px;
-            font-size: 5px;
+            padding: 2px 5px;
+            font-size: 4.5px;
             font-weight: 700;
             display: inline-block;
-            margin-top: 3px;
+            margin-top: 2px;
             border-radius: 3px;
             text-transform: uppercase;
         }
@@ -246,8 +248,8 @@
 
         .brand-contact {
             text-align: right;
-            font-size: 6.5px;
-            line-height: 1.3;
+            font-size: 6px;
+            line-height: 1.2;
             color: #475569;
         }
 
@@ -257,8 +259,8 @@
         }
 
         .nota-logo {
-            width: 34px;
-            height: 34px;
+            width: 30px;
+            height: 30px;
             object-fit: cover;
             border-radius: 50%;
             border: 1.5px solid var(--accent);
@@ -269,37 +271,37 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
 
         .nota-title-bar h2 {
             margin: 0;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--accent);
             font-weight: 800;
         }
 
         .meta-top {
-            font-size: 6.5px;
+            font-size: 6px;
             text-align: right;
             color: #475569;
         }
 
         .meta-top p {
-            margin: 1px 0;
+            margin: 0;
         }
 
         .info-box-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             border: 1.5px solid var(--primary);
-            border-radius: 4px;
-            margin-bottom: 5px;
+            border-radius: 3px;
+            margin-bottom: 4px;
             background: #f8fafc;
         }
 
         .info-column {
-            padding: 4px 6px;
+            padding: 3px 5px;
         }
 
         .info-column:first-child {
@@ -308,12 +310,12 @@
 
         .info-row {
             display: flex;
-            font-size: 6.8px;
-            margin-bottom: 2px;
+            font-size: 6.5px;
+            margin-bottom: 1.5px;
         }
 
         .info-row span:first-child {
-            width: 48px;
+            width: 45px;
             font-weight: 700;
             color: #334155;
         }
@@ -332,9 +334,9 @@
 
         .unified-table-container {
             border: 1.5px solid var(--primary);
-            border-radius: 4px;
+            border-radius: 3px;
             overflow: hidden;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             background: #fff;
         }
 
@@ -347,8 +349,8 @@
         .item-table th, .item-table td {
             border-bottom: 1px solid #cbd5e1;
             border-right: 1px solid #cbd5e1;
-            padding: 2.5px 4px;
-            font-size: 6.5px;
+            padding: 2px 4px;
+            font-size: 6px;
             overflow: hidden;
             word-wrap: break-word;
         }
@@ -367,9 +369,9 @@
 
         .subtotal-box-container {
             border: 1.5px solid var(--primary);
-            border-radius: 4px;
+            border-radius: 3px;
             overflow: hidden;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
             background: #fff;
         }
 
@@ -382,8 +384,8 @@
         .finance-table td {
             border-bottom: 1px solid #cbd5e1;
             border-right: 1px solid #cbd5e1;
-            padding: 2.5px 5px;
-            font-size: 6.5px;
+            padding: 2px 4px;
+            font-size: 6px;
         }
 
         .finance-table tr:last-child td {
@@ -401,9 +403,9 @@
 
         .total-box-container {
             border: 1.5px solid var(--primary);
-            border-radius: 4px;
+            border-radius: 3px;
             overflow: hidden;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             background: var(--primary);
         }
 
@@ -414,8 +416,8 @@
         }
 
         .total-table td {
-            padding: 3px 5px;
-            font-size: 7px;
+            padding: 2.5px 4px;
+            font-size: 6.5px;
             font-weight: 800;
             color: white;
         }
@@ -423,15 +425,15 @@
         .footer-grid {
             display: grid;
             grid-template-columns: 1.2fr 0.8fr;
-            gap: 8px;
+            gap: 6px;
             align-items: flex-start;
             border-top: 1px solid #cbd5e1;
-            padding-top: 5px;
+            padding-top: 4px;
         }
 
         .notes-box {
-            font-size: 5.5px;
-            line-height: 1.25;
+            font-size: 5px;
+            line-height: 1.2;
             color: #475569;
             white-space: pre-line;
         }
@@ -446,22 +448,22 @@
             display: flex;
             justify-content: space-between;
             text-align: center;
-            font-size: 6.5px;
+            font-size: 6px;
             font-weight: 600;
         }
 
         .sign-space {
-            height: 18px;
+            height: 14px;
         }
 
         .nota-footer-message {
             text-align: center;
-            font-size: 6px;
+            font-size: 5.5px;
             font-weight: 700;
             color: #475569;
             border-top: 1px dashed #cbd5e1;
-            margin-top: 5px;
-            padding-top: 3px;
+            margin-top: 4px;
+            padding-top: 2px;
             text-transform: uppercase;
         }
 
@@ -551,10 +553,10 @@
         }
 
         @media print {
-            @page { size: F4; margin: 0; }
+            @page { size: auto; margin: 5mm; }
             body { background: white; padding: 0; margin: 0; }
             .control-panel, .action-bar { display: none !important; }
-            .nota-sheet { box-shadow: none; margin: 0; position: absolute; top: 0; left: 0; width: 12cm; border: none; }
+            .nota-sheet { box-shadow: none; margin: 0; width: 12cm; border: 2px dashed #94a3b8 !important; }
         }
     </style>
 </head>
@@ -704,7 +706,7 @@
         </div>
     </div>
 
-    <!-- FORMAT NOTA (12x6 cm) -->
+    <!-- FORMAT NOTA (12x5.8 cm dengan garis putus-putus di sekelilingnya) -->
     <div class="nota-sheet" id="notaSheet">
         <div class="nota-header">
             <div class="brand-area">
@@ -725,7 +727,7 @@
             <div class="meta-top"><p><strong>Tgl:</strong> <span id="outTanggal">27 Agustus 2026</span></p></div>
         </div>
         
-        <div style="font-size: 7px; margin-bottom: 4px; font-weight: 700; color: #334155;">
+        <div style="font-size: 6.5px; margin-bottom: 3px; font-weight: 700; color: #334155;">
             NO. NOTA : <span id="outNoNota" style="color:var(--accent);">RJT/2026/08/088</span>
         </div>
 
@@ -1047,7 +1049,7 @@
 
     function clearForm() {
         document.getElementById('inNoNota').value = 'RJT/' + new Date().getFullYear() + '/08/' + Math.floor(100 + Math.random() * 900);
-        setTodayDateInput(); // Otomatis set tanggal hari ini saat klik Baru
+        setTodayDateInput(); 
         document.getElementById('inNama').value = '';
         document.getElementById('inAlamat').value = '';
         document.getElementById('inNoHp').value = '';
