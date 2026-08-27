@@ -327,7 +327,7 @@
 
         .info-row span:last-child {
             flex: 1;
-            font-weight: 700; /* Ditebalkan */
+            font-weight: 700;
             color: var(--primary);
             border-bottom: 1px dotted #cbd5e1;
         }
@@ -353,7 +353,7 @@
             font-size: 6px;
             overflow: hidden;
             word-wrap: break-word;
-            font-weight: 700; /* Ditebalkan */
+            font-weight: 700;
         }
 
         .item-table th:last-child, .item-table td:last-child {
@@ -364,7 +364,7 @@
             background-color: var(--primary);
             color: white;
             text-align: center;
-            font-weight: 800; /* Ditebalkan */
+            font-weight: 800;
             text-transform: uppercase;
         }
 
@@ -387,7 +387,7 @@
             border-right: 1px solid #cbd5e1;
             padding: 2px 4px;
             font-size: 6px;
-            font-weight: 700; /* Ditebalkan */
+            font-weight: 700;
         }
 
         .finance-table tr:last-child td {
@@ -395,13 +395,13 @@
         }
 
         .finance-table tr td:first-child {
-            font-weight: 800; /* Ditebalkan */
+            font-weight: 800;
             color: #334155;
         }
 
         .finance-table tr td:last-child {
             border-right: none;
-            font-weight: 800; /* Ditebalkan */
+            font-weight: 800;
         }
 
         .total-box-container {
@@ -421,7 +421,7 @@
         .total-table td {
             padding: 2.5px 4px;
             font-size: 6.5px;
-            font-weight: 900; /* Ditebalkan */
+            font-weight: 900;
             color: white;
         }
 
@@ -439,14 +439,14 @@
             line-height: 1.2;
             color: #475569;
             white-space: pre-line;
-            font-weight: 700; /* Ditebalkan */
+            font-weight: 700;
         }
 
         .notes-box strong {
             display: block;
             margin-bottom: 1px;
             color: var(--primary);
-            font-weight: 800; /* Ditebalkan */
+            font-weight: 800;
         }
 
         .signatures {
@@ -454,7 +454,7 @@
             justify-content: space-between;
             text-align: center;
             font-size: 6px;
-            font-weight: 800; /* Ditebalkan */
+            font-weight: 800;
         }
 
         .sign-space {
@@ -464,7 +464,7 @@
         .nota-footer-message {
             text-align: center;
             font-size: 5.5px;
-            font-weight: 800; /* Ditebalkan */
+            font-weight: 800;
             color: #475569;
             border-top: 1px dashed #cbd5e1;
             margin-top: 4px;
@@ -499,7 +499,6 @@
         .btn-print { background: var(--accent-gradient); }
         .btn-wa { background: #25d366; }
 
-        /* Dropdown WhatsApp Container */
         .dropdown {
             position: relative;
             display: inline-block;
@@ -557,11 +556,26 @@
             opacity: 0.95;
         }
 
+        /* PENGATURAN CETAK DENGAN WARNA ASLI TETAP MUNCUL */
         @media print {
             @page { size: auto; margin: 5mm; }
             body { background: white; padding: 0; margin: 0; }
             .control-panel, .action-bar { display: none !important; }
-            .nota-sheet { box-shadow: none; margin: 0; width: 12cm; border: 2px dashed #94a3b8 !important; font-weight: bold !important; }
+            
+            .nota-sheet { 
+                box-shadow: none; 
+                margin: 0; 
+                width: 12cm; 
+                border: 2px dashed #64748b !important; 
+                -webkit-print-color-adjust: exact !important; 
+                print-color-adjust: exact !important;
+            }
+
+            /* Memaksa browser mencetak warna latar belakang dan gradasi aslinya */
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
         }
     </style>
 </head>
@@ -569,7 +583,6 @@
 
 <div class="container">
 
-    <!-- PANEL INPUT LIVE -->
     <div class="control-panel">
         <h3><i class="fa-solid fa-sliders"></i> Panel Input Data & Database Nota RJTRONIK</h3>
         
@@ -590,7 +603,6 @@
             <button type="button" class="btn-db" style="background:#64748b; color:white;" onclick="clearForm()"><i class="fa-solid fa-file-circle-plus"></i> Baru</button>
         </div>
 
-        <!-- 1. NOMOR NOTA & TANGGAL MASUK -->
         <div class="form-grid">
             <div class="form-group">
                 <label>Nomor Nota</label>
@@ -605,7 +617,6 @@
             </div>
         </div>
 
-        <!-- 2. DATA KONSUMEN & KELUHAN -->
         <div class="mandatory-box">
             <div class="mandatory-box-title"><i class="fa-solid fa-user-check"></i> Data Konsumen & Keluhan (Kosongkan = otomatis "-")</div>
             <div class="consumer-grid">
@@ -636,7 +647,6 @@
             </div>
         </div>
 
-        <!-- 3. RINCIAN PEKERJAAN & HARGA -->
         <div class="items-section-container">
             <div class="section-divider" style="margin-top: 0;"><i class="fa-solid fa-screwdriver-wrench"></i> Rincian Pekerjaan & Harga</div>
             <div class="items-grid-container">
@@ -694,12 +704,10 @@
             </div>
         </div>
 
-        <!-- 4. KEUANGAN & CATATAN -->
         <div class="section-divider">Keuangan & Catatan</div>
         <div class="form-grid">
             <div class="form-group">
                 <label>Diskon</label>
-                <!-- Kolom diskon dikosongkan tanpa nilai default 0 -->
                 <input type="text" id="inDiskon" value="" placeholder="0" oninput="formatInputRupiah(this); syncData();">
             </div>
             <div class="form-group">
@@ -711,7 +719,6 @@
         </div>
     </div>
 
-    <!-- FORMAT NOTA (12x5.8 cm dengan garis putus-putus di sekelilingnya) -->
     <div class="nota-sheet" id="notaSheet">
         <div class="nota-header">
             <div class="brand-area">
@@ -793,7 +800,6 @@
         <div class="nota-footer-message">Terimakasih atas kunjungan/Kepercayaan anda</div>
     </div>
 
-    <!-- Tombol Aksi -->
     <div class="action-bar">
         <button class="btn-action btn-print" onclick="handlePrintWithDriveUpload()"><i class="fa-solid fa-print"></i> Cetak Nota Fisik</button>
         
@@ -806,7 +812,6 @@
         </div>
     </div>
 
-    <!-- Loading Box -->
     <div id="loadingProgressBox" style="display: none; background: #0f172a; color: white; padding: 14px; border-radius: 12px; margin-top: 20px; text-align: center; font-weight: 700; font-size: 0.9rem;">
         <i class="fa-solid fa-spinner fa-spin"></i> <span id="loadingText">Menyimpan ke Google Drive...</span>
     </div>
